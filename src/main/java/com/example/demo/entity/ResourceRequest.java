@@ -26,8 +26,12 @@ public class ResourceRequest {
     private String purpose;
     private String status = "PENDING"; 
     public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-    public String getResourceType() { return resourceType; }
+    public void setId(Long id) {
+         this.id = id;
+          }
+    public String getResourceType() { 
+        return resourceType;
+         }
     public void setResourceType(String resourceType) { this.resourceType = resourceType; }
     public User getRequestedBy() { return requestedBy; }
     public void setRequestedBy(User requestedBy) { this.requestedBy = requestedBy; }
