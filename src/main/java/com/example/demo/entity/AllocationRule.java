@@ -44,7 +44,7 @@ public AllocationRule(Long id,String ruleName,String ruleType,int priorityWeight
     this.id=id;
     this.ruleName=ruleName;
     this.ruleType=ruleType;
-    this.priorityWeigh=priorityWeigh;
+    this.priorityWeight=priorityWeight;
     this.createdAt=createdAt;
 }
 public AllocationRule()
