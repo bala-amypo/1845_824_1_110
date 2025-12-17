@@ -39,12 +39,15 @@ public class AllocationRule {
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 
 }
-public AllocationRule(Long id,String ruleName,String ruleType,Integer priorityWeight,LocalDateTime createAt)
+public AllocationRule(Long id,String ruleName,String ruleType,Integer priorityWeight,LocalDateTime createdAt)
 {
     this.id=id;
     this.ruleName=ruleName;
+    this.ruleType=ruleType;
+    this.priorityWeigh=priorityWeigh;
+    this.createdAt=createdAt;
 }
 public AllocationRule()
 {
-    
+   
 }
