@@ -32,7 +32,8 @@ public class ResourceRequest {
     public String getResourceType() { 
         return resourceType;
          }
-    public void setResourceType(String resourceType) { this.resourceType = resourceType; }
+    public void setResourceType(String resourceType) { 
+        this.resourceType = resourceType; }
     public User getRequestedBy() { return requestedBy; }
     public void setRequestedBy(User requestedBy) { this.requestedBy = requestedBy; }
     public LocalDateTime getStartTime() { return startTime; }
