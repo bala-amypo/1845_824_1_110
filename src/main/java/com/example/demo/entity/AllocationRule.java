@@ -19,7 +19,7 @@ public class AllocationRule {
     private String ruleName;
 
     private String ruleType; 
-    private Integer priorityWeight;
+    private int priorityWeight;
     private LocalDateTime createdAt;
 
     @PrePersist
@@ -39,7 +39,7 @@ public class AllocationRule {
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 
 }
-public AllocationRule(Long id,String ruleName,String ruleType,Integer priorityWeight,LocalDateTime createdAt)
+public AllocationRule(Long id,String ruleName,String ruleType,int priorityWeight,LocalDateTime createdAt)
 {
     this.id=id;
     this.ruleName=ruleName;

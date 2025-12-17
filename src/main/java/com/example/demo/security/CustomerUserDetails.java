@@ -1,3 +1,3 @@
-public class CustomerUserDetails{
+// public class CustomerUserDetails{
     
-}
+// }
