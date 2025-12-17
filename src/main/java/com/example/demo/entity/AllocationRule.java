@@ -37,5 +37,14 @@ public class AllocationRule {
     public void setPriorityWeight(Integer priorityWeight) { this.priorityWeight = priorityWeight; }
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+
+}
+public AllocationRule(Long id,String ruleName,String ruleType,Integer priorityWeight,LocalDateTime createAt)
+{
+    this.id=id;
+    this.ruleName=ruleName;
+}
+public AllocationRule()
+{
     
 }
