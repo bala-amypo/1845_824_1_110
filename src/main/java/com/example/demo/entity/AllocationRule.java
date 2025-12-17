@@ -5,24 +5,21 @@ import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Column;
-import jakarta.persistence.Table;
 import jakarta.persistence.PrePersist;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "users")
-public class User {
+public class AllocationRule {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String fullName;
-
     @Column(unique = true, nullable = false)
-    private String email;
+    private String ruleName;
 
-    private String role = "USER"; 
+    private String ruleType; 
+    private Integer priorityWeight;
     private LocalDateTime createdAt;
 
     @PrePersist
@@ -30,15 +27,14 @@ public class User {
         this.createdAt = LocalDateTime.now();
     }
 
-    
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
-    public String getFullName() { return fullName; }
-    public void setFullName(String fullName) { this.fullName = fullName; }
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
-    public String getRole() { return role; }
-    public void setRole(String role) { this.role = role; }
+    public String getRuleName() { return ruleName; }
+    public void setRuleName(String ruleName) { this.ruleName = ruleName; }
+    public String getRuleType() { return ruleType; }
+    public void setRuleType(String ruleType) { this.ruleType = ruleType; }
+    public Integer getPriorityWeight() { return priorityWeight; }
+    public void setPriorityWeight(Integer priorityWeight) { this.priorityWeight = priorityWeight; }
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 }
