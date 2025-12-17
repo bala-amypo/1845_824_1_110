@@ -63,4 +63,15 @@ public class ResourceRequest {
     public void setStatus(String status) { 
         this.status = status;
          }
+         public Resource (Long id,String deviceCode,String deviceType,String model,Integer maxAllowedPerEmployee,Boolean active){
+        this.id = id;
+        this.deviceCode = deviceCode;
+        this.deviceType = deviceType;
+        this.model = model;
+        this.maxAllowedPerEmployee = maxAllowedPerEmployee;
+    }
+    public DeviceCatalogItem(){
+        
+    }
+}
 }
