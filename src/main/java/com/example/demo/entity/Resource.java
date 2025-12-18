@@ -5,9 +5,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Column;
-import jakarta.persistence.PrePersist;
-import java.time.LocalDateTime;
-
 @Entity
 public class Resource {
 
@@ -15,10 +12,8 @@ public class Resource {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true)
     private String resourceName;
-
-    @Column(nullable = false)
     private String resourceType;
 
     private Integer capacity;
@@ -36,10 +31,18 @@ public class Resource {
     public void setCapacity(Integer capacity) { this.capacity = capacity; }
     public String getLocation() { return location; }
     public void setLocation(String location) { this.location = location; }
-    public LocalDateTime getCreatedAt() { return createdAt; }
-    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+    public String getCreatedAt() { return createdAt; }
+    public void setCreatedAt(String createdAt) { this.createdAt = createdAt; }
 
     public Resource(Long id,String resourceName,String resourceType,Integer capacity,String location,String createdAt){
-        
+        this.id=id;
+        this.resourceName=resourceName;
+        this.resourceType=resourceType;
+        this.capacity=capacity;
+        this.location=location;
+        this.createdAt=createdAt;
+    }
+    public Resource(){
+
     }
 }
