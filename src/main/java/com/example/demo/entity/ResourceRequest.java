@@ -60,13 +60,17 @@ public class ResourceRequest {
     public void setStatus(String status) { 
         this.status = status;
         }
-    public Resource (Long id,String resourceType,String requestedBy,LocalDateTime startTime,LocalDateTime endTime,String purpose,String status){
+    public ResourceRequest(Long id,String resourceType,String requestedBy,LocalDateTime startTime,LocalDateTime endTime,String purpose,String status){
 
         this.id = id;
         this.resourceType=resourceType;
-        this.
+        this.requestedBy=requestedBy;
+        this.startTime=startTime;
+        this.endTime=endTime;
+        this.purpose=purpose;
+        this.status=status;
     }
-    public DeviceCatalogItem(){
+    public ResourceRequest(){
         
     }
 }
