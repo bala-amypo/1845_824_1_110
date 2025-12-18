@@ -35,5 +35,15 @@ public class ResourceAllocation {
     public String getNotes() { return notes; }
     public void setNotes(String notes) { this.notes = notes; }
 
-    public ResourceAllocation(Long id,)
+    public ResourceAllocation(Long id,String resource,String request,String allocatedAt,Boolean conflictFlag,String notes){
+        this.id=id;
+        this.resource=resource;
+        this.request=request;
+        this.allocatedAt=allocatedAt;
+        this.conflictFlag=conflictFlag;
+        this.notes=notes;
+    }
+    public ResourceAllocation(){
+
+    }
 }
