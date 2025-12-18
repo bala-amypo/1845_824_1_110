@@ -36,5 +36,14 @@ public class User {
     public String getCreatedAt() { return createdAt; }
     public void setCreatedAt(String createdAt) { this.createdAt = createdAt; }
 
-    public User(Long id,String fullName,)
+    public User(Long id,String fullName,String email,String role,String createdAt){
+        this.id=id;
+        this.fullName=fullName;
+        this.email=email;
+        this.role=role;
+        this.createdAt=createdAt;
+    }
+    public User(){
+        
+    }
 }
