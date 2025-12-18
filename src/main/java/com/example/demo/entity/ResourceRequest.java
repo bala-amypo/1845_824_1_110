@@ -32,10 +32,10 @@ public class ResourceRequest {
     public void setResourceType(String resourceType) { 
         this.resourceType = resourceType;
          }
-    public User getRequestedBy() {
+    public String getRequestedBy() {
          return requestedBy; 
          }
-    public void setRequestedBy(User requestedBy) { this.requestedBy = requestedBy; }
+    public void setRequestedBy(String requestedBy) { this.requestedBy = requestedBy; }
     public LocalDateTime getStartTime() {
          return startTime; 
          }
@@ -59,14 +59,12 @@ public class ResourceRequest {
           }
     public void setStatus(String status) { 
         this.status = status;
-         }
-         public Resource (Long id,String resourceName,String resourceType,String location,LocalDateTime createdAt){
+        }
+    public Resource (Long id,String resourceType,String requestedBy,LocalDateTime startTime,LocalDateTime endTime,String purpose,String status){
 
         this.id = id;
-        this.resourceName = deviceCode;
-        this.deviceType = deviceType;
-        this.model = model;
-        this.maxAllowedPerEmployee = maxAllowedPerEmployee;
+        this.resourceType=resourceType;
+        this.
     }
     public DeviceCatalogItem(){
         
