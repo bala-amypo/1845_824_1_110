@@ -23,7 +23,7 @@ public class AllocationRuleServiceImpl implements AllocationRuleService {
 
     @Override
     public AllocationRule getRule(Long id) {
-        return ruleRepository.findById(id)
+        return ruleRepository.findById(id);
                 .orElseThrow(() -> new RuntimeException("Rule not found"));
     }
 
