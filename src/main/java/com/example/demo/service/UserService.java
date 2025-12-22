@@ -7,7 +7,8 @@ public interface UserService {
 
     User registerUser(User user);
 
-    User getUser(Long id);
-
     List<User> getAllUsers();
+
+    // ✅ REQUIRED by controller
+    User getUserById(Long id);
 }
