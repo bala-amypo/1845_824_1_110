@@ -4,7 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import ja
+import java.time.LocalDate;
 
 @Entity
 public class ResourceAllocation {
@@ -15,7 +15,7 @@ public class ResourceAllocation {
 
     private String resource;
 
-    private String request;
+    private LocalDate request;
 
     private String allocatedAt;
     private Boolean conflictFlag;
@@ -27,8 +27,8 @@ public class ResourceAllocation {
     public void setId(Long id) { this.id = id; }
     public String getResource() { return resource; }
     public void setResource(String resource) { this.resource = resource; }
-    public String getRequest() { return request; }
-    public void setRequest(String request) { this.request = request; }
+    public LocalDate getRequest() { return request; }
+    public void setRequest(LocalDate request) { this.request = request; }
     public String getAllocatedAt() { return allocatedAt; }
     public void setAllocatedAt(String allocatedAt) { this.allocatedAt = allocatedAt; }
     public Boolean getConflictFlag() { return conflictFlag; }
@@ -36,7 +36,7 @@ public class ResourceAllocation {
     public String getNotes() { return notes; }
     public void setNotes(String notes) { this.notes = notes; }
 
-    public ResourceAllocation(Long id,String resource,String request,String allocatedAt,Boolean conflictFlag,String notes){
+    public ResourceAllocation(Long id,String resource,LocalDate request,String allocatedAt,Boolean conflictFlag,String notes){
         this.id=id;
         this.resource=resource;
         this.request=request;
