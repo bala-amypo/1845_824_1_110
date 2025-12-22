@@ -9,6 +9,8 @@ public interface ResourceRequestService {
 
     List<ResourceRequest> getRequestsByUser(Long userId);
 
-    // ✅ This method MUST be implemented
     ResourceRequest updateRequestStatus(Long requestId, String status);
+
+    // ✅ REQUIRED by controller
+    ResourceRequest getRequestById(Long id);
 }

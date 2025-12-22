@@ -37,7 +37,6 @@ public class ResourceRequestServiceImpl implements ResourceRequestService {
         return requestRepository.findByUserId(userId);
     }
 
-    // ✅ THIS FIXES THE ERROR
     @Override
     public ResourceRequest updateRequestStatus(Long requestId, String status) {
         ResourceRequest request = requestRepository.findById(requestId)
@@ -45,5 +44,12 @@ public class ResourceRequestServiceImpl implements ResourceRequestService {
 
         request.setStatus(status);
         return requestRepository.save(request);
+    }
+
+    // ✅ THIS FIXES THE ERROR
+    @Override
+    public ResourceRequest getRequestById(Long id) {
+        return requestRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Request not found"));
     }
 }
