@@ -22,13 +22,14 @@ public class ResourceServiceImpl implements ResourceService {
     }
 
     @Override
-    public Resource getResource(Long id) {
-        return resourceRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Resource not found"));
-    }
-
-    @Override
     public List<Resource> getAllResources() {
         return resourceRepository.findAll();
+    }
+
+    // ✅ THIS FIXES THE ERROR
+    @Override
+    public Resource getResourceById(Long id) {
+        return resourceRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Resource not found"));
     }
 }
