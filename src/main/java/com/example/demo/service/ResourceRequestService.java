@@ -5,11 +5,10 @@ import java.util.List;
 
 public interface ResourceRequestService {
 
-    ResourceRequest createRequest(Long userId, ResourceRequest request);
+    ResourceRequest createRequest(ResourceRequest request, Long userId);
 
     List<ResourceRequest> getRequestsByUser(Long userId);
 
-    ResourceRequest getRequest(Long id);
-
+    // ✅ This method MUST be implemented
     ResourceRequest updateRequestStatus(Long requestId, String status);
 }
