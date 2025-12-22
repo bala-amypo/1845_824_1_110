@@ -22,30 +22,18 @@ public class ResourceRequestServiceImpl implements ResourceRequestService {
     }
 
     @Override
-    public ResourceRequest createRequest(Long userId, ResourceRequest request) {
+    public ResourceRequest createRequest(ResourceRequest request, Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        request.setUser(user);
+        request.setUser(user);   // ✅ now exists
         request.setStatus("PENDING");
+
         return requestRepository.save(request);
     }
 
     @Override
     public List<ResourceRequest> getRequestsByUser(Long userId) {
-        return requestRepository.findByUserId(userId);
-    }
-
-    @Override
-    public ResourceRequest getRequest(Long id) {
-        return requestRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Request not found"));
-    }
-
-    @Override
-    public ResourceRequest updateRequestStatus(Long requestId, String status) {
-        ResourceRequest request = getRequest(requestId);
-        request.setStatus(status);
-        return requestRepository.save(request);
+        return requestRepository.findByUserId(userId); // ✅ now exists
     }
 }
