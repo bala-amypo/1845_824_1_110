@@ -26,7 +26,6 @@ public class ResourceServiceImpl implements ResourceService {
         return resourceRepository.findAll();
     }
 
-    // ✅ THIS FIXES THE ERROR
     @Override
     public Resource getResourceById(Long id) {
         return resourceRepository.findById(id)

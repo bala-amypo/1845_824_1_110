@@ -9,6 +9,5 @@ public interface ResourceService {
 
     List<Resource> getAllResources();
 
-    // ✅ REQUIRED by controller
     Resource getResourceById(Long id);
 }

@@ -9,6 +9,5 @@ public interface UserService {
 
     List<User> getAllUsers();
 
-    // ✅ REQUIRED by controller
     User getUserById(Long id);
 }

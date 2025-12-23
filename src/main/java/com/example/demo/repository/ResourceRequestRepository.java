@@ -7,6 +7,5 @@ import java.util.List;
 
 public interface ResourceRequestRepository extends JpaRepository<ResourceRequest, Long> {
 
-    // ✅ This fixes ERROR #2
     List<ResourceRequest> findByUserId(Long userId);
 }

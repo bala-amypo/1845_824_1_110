@@ -26,7 +26,6 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll();
     }
 
-    // ✅ THIS FIXES THE ERROR
     @Override
     public User getUserById(Long id) {
         return userRepository.findById(id)
