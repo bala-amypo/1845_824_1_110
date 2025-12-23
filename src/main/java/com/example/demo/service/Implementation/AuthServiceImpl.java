@@ -13,7 +13,7 @@ public class AuthServiceImpl implements AuthService {
 
     public AuthServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
-    }  r
+    }  
 
     @Override
     public User register(User user) {
