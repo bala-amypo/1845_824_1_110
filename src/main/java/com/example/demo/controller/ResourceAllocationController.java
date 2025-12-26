@@ -1,33 +1,34 @@
-package com.example.demo.controller;
+package com.example.demo.entity;
 
-import com.example.demo.entity.ResourceAllocation;
-import com.example.demo.service.ResourceAllocationService;
-import org.springframework.web.bind.annotation.*;
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
-import java.util.List;
+@Entity
+public class ResourceAllocation {
 
-@RestController
-@RequestMapping("/api/allocations")
-public class ResourceAllocationController {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    private final ResourceAllocationService allocationService;
+    private LocalDateTime allocatedAt;
+    private String notes;
 
-    public ResourceAllocationController(ResourceAllocationService allocationService) {
-        this.allocationService = allocationService;
-    }
+    @ManyToOne
+    private ResourceRequest request;
 
-    @PostMapping("/auto/{requestId}")
-    public ResourceAllocation autoAllocate(@PathVariable Long requestId) {
-        return allocationService.autoAllocate(requestId);
-    }
+    public ResourceAllocation() {}
 
-    @GetMapping
-    public List<ResourceAllocation> getAll() {
-        return allocationService.getAllAllocations();
-    }
+    public Long getId() { return id; }
 
-    @GetMapping("/{id}")
-    public ResourceAllocation getById(@PathVariable Long id) {
-        return allocationService.getAllocation(id);
-    }
+    public LocalDateTime getAllocatedAt() { return allocatedAt; }
+    public void setAllocatedAt(LocalDateTime allocatedAt) { this.allocatedAt = allocatedAt; }
+
+    public String getNotes() { return notes; }
+    public void setNotes(String notes) { this.notes = notes; }
+
+    public ResourceRequest getRequest() { return request; }
+    public void setRequest(ResourceRequest request) { this.request = request; }
+
+    // ✅ REQUIRED BY TEST
+    public ResourceRequest getResource() { return request; }
 }

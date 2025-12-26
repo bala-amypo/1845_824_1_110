@@ -1,40 +1,41 @@
-package com.example.demo.controller;
+package com.example.demo.entity;
 
-import com.example.demo.entity.ResourceRequest;
-import com.example.demo.service.ResourceRequestService;
-import org.springframework.web.bind.annotation.*;
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
-import java.util.List;
+@Entity
+public class ResourceRequest {
 
-@RestController
-@RequestMapping("/api/requests")
-public class ResourceRequestController {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    private final ResourceRequestService requestService;
+    private String resourceType;
+    private String status;
+    private LocalDateTime startTime;
 
-    public ResourceRequestController(ResourceRequestService requestService) {
-        this.requestService = requestService;
-    }
+    @ManyToOne
+    private User user;
 
-    @PostMapping("/{userId}")
-    public ResourceRequest createRequest(@PathVariable Long userId,
-                                         @RequestBody ResourceRequest request) {
-        return requestService.createRequest(request, userId);
-    }
+    public ResourceRequest() {}
 
-    @GetMapping("/user/{userId}")
-    public List<ResourceRequest> getByUser(@PathVariable Long userId) {
-        return requestService.getRequestsByUser(userId);
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    @GetMapping("/{id}")
-    public ResourceRequest getById(@PathVariable Long id) {
-        return requestService.getRequestById(id);
-    }
+    public String getResourceType() { return resourceType; }
+    public void setResourceType(String resourceType) { this.resourceType = resourceType; }
 
-    @PutMapping("/status/{requestId}")
-    public ResourceRequest updateStatus(@PathVariable Long requestId,
-                                        @RequestParam String status) {
-        return requestService.updateRequestStatus(requestId, status);
-    }
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
+
+    public LocalDateTime getStartTime() { return startTime; }
+    public void setStartTime(LocalDateTime startTime) { this.startTime = startTime; }
+
+    public User getUser() { return user; }
+    public void setUser(User user) { this.user = user; }
+
+    // ✅ REQUIRED BY TEST
+    public User getRequestedBy() { return user; }
+    public void setRequestedBy(User user) { this.user = user; }
 }
+
