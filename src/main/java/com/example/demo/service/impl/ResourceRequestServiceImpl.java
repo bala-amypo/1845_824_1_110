@@ -1,30 +1,60 @@
 package com.example.demo.service.impl;
 
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-
 import com.example.demo.entity.ResourceRequest;
+import com.example.demo.entity.User;
 import com.example.demo.repository.ResourceRequestRepository;
+import com.example.demo.repository.UserRepository;
 import com.example.demo.service.ResourceRequestService;
 
-@Service
+import java.util.List;
+
 public class ResourceRequestServiceImpl implements ResourceRequestService {
 
-    private final ResourceRequestRepository requestRepository;
+    private final ResourceRequestRepository repo;
+    private UserRepository userRepo;
 
-    public ResourceRequestServiceImpl(ResourceRequestRepository requestRepository) {
-        this.requestRepository = requestRepository;
+    // EXISTING
+    public ResourceRequestServiceImpl(ResourceRequestRepository repo) {
+        this.repo = repo;
+    }
+
+    // ✅ REQUIRED BY TEST
+    public ResourceRequestServiceImpl(ResourceRequestRepository repo, UserRepository userRepo) {
+        this.repo = repo;
+        this.userRepo = userRepo;
     }
 
     @Override
     public ResourceRequest createRequest(ResourceRequest request) {
-        return requestRepository.save(request);
+        request.setStatus("PENDING");
+        return repo.save(request);
     }
 
-    // ✅ IMPLEMENT METHOD
+    // ✅ REQUIRED
+    @Override
+    public ResourceRequest createRequest(Long userId, ResourceRequest request) {
+        User u = userRepo.findById(userId).orElseThrow();
+        request.setRequestedBy(u);
+        request.setStatus("PENDING");
+        return repo.save(request);
+    }
+
     @Override
     public List<ResourceRequest> getAllRequests() {
-        return requestRepository.findAll();
+        return repo.findAll();
+    }
+
+    // ✅ REQUIRED
+    @Override
+    public List<ResourceRequest> getRequestsByUser(Long userId) {
+        return repo.findByRequestedBy_Id(userId);
+    }
+
+    // ✅ REQUIRED
+    @Override
+    public ResourceRequest updateRequestStatus(Long requestId, String status) {
+        ResourceRequest r = repo.findById(requestId).orElseThrow();
+        r.setStatus(status);
+        return repo.save(r);
     }
 }
