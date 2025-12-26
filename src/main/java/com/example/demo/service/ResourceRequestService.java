@@ -1,16 +1,12 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.ResourceRequest;
 import java.util.List;
+import com.example.demo.entity.ResourceRequest;
 
 public interface ResourceRequestService {
 
-    ResourceRequest createRequest(ResourceRequest request, Long userId);
+    ResourceRequest createRequest(ResourceRequest request);
 
-    List<ResourceRequest> getRequestsByUser(Long userId);
-
-    ResourceRequest updateRequestStatus(Long requestId, String status);
-
-    // ✅ REQUIRED by controller
-    ResourceRequest getRequestById(Long id);
+    // ✅ ADD THIS
+    List<ResourceRequest> getAllRequests();
 }
