@@ -1,7 +1,6 @@
 package com.example.demo.security;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class JwtUtil {
 
@@ -16,8 +15,20 @@ public class JwtUtil {
         return "header." + email + "." + role;
     }
 
+    // ✅ ADD THIS METHOD
+    public boolean validateToken(String token) {
+        try {
+            parseClaims(token);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     public Claims parseClaims(String token) {
-        if (!token.contains(".")) throw new RuntimeException("Invalid token");
+        if (!token.contains(".")) {
+            throw new RuntimeException("Invalid token");
+        }
 
         if (System.currentTimeMillis() - createdAt > expiryMillis) {
             throw new RuntimeException("Token expired");
