@@ -1,46 +1,45 @@
 package com.example.demo.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrePersist;
 import java.time.LocalDateTime;
 
+@Entity
 public class ResourceAllocation {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
     private Resource resource;
-    private ResourceRequest request;     // ✅ ADD
-    private String status;               // ✅ ADD
+
+    @OneToOne
+    private ResourceRequest request;
+
+    private LocalDateTime allocatedAt;
+
+    private Boolean conflictFlag = false;
+
     private String notes;
-    private LocalDateTime allocatedAt = LocalDateTime.now();
 
-    public Resource getResource() {
-        return resource;
-    }
-    public void setResource(Resource resource) {
-        this.resource = resource;
-    }
+    public ResourceAllocation() {}
 
-    // ✅ REQUIRED BY SERVICE
-    public ResourceRequest getRequest() {
-        return request;
-    }
-    public void setRequest(ResourceRequest request) {
-        this.request = request;
+    @PrePersist
+    public void onCreate() {
+        allocatedAt = LocalDateTime.now();
     }
 
-    // ✅ REQUIRED BY SERVICE
-    public String getStatus() {
-        return status;
-    }
-    public void setStatus(String status) {
-        this.status = status;
-    }
+    public Resource getResource() { return resource; }
+    public LocalDateTime getAllocatedAt() { return allocatedAt; }
+    public String getNotes() { return notes; }
 
-    public String getNotes() {
-        return notes;
-    }
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
-
-    public LocalDateTime getAllocatedAt() {
-        return allocatedAt;
-    }
+    public void setResource(Resource resource) { this.resource = resource; }
+    public void setRequest(ResourceRequest request) { this.request = request; }
+    public void setNotes(String notes) { this.notes = notes; }
 }

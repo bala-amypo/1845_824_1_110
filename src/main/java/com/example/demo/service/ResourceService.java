@@ -7,7 +7,7 @@ public interface ResourceService {
 
     Resource createResource(Resource resource);
 
-    List<Resource> getAllResources();
+    Resource getResource(Long id);
 
-    Resource getResourceById(Long id);
+    List<Resource> getAllResources();
 }
