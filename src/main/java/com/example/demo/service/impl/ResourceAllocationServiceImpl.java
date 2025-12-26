@@ -2,44 +2,43 @@ package com.example.demo.service.impl;
 
 import com.example.demo.entity.ResourceAllocation;
 import com.example.demo.entity.ResourceRequest;
-import com.example.demo.repository.*;
+import com.example.demo.repository.ResourceAllocationRepository;
+import com.example.demo.repository.ResourceRequestRepository;
 import com.example.demo.service.ResourceAllocationService;
+import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
+@Service
 public class ResourceAllocationServiceImpl implements ResourceAllocationService {
 
-    private final ResourceRequestRepository requestRepository;
-    private final ResourceRepository resourceRepository;
-    private final ResourceAllocationRepository allocationRepository;
+    private final ResourceAllocationRepository allocationRepo;
+    private final ResourceRequestRepository requestRepo;
 
-    // ✅ EXACT constructor expected by test
-    public ResourceAllocationServiceImpl(
-            ResourceRequestRepository requestRepository,
-            ResourceRepository resourceRepository,
-            ResourceAllocationRepository allocationRepository
-    ) {
-        this.requestRepository = requestRepository;
-        this.resourceRepository = resourceRepository;
-        this.allocationRepository = allocationRepository;
+    public ResourceAllocationServiceImpl(ResourceAllocationRepository allocationRepo,
+                                         ResourceRequestRepository requestRepo) {
+        this.allocationRepo = allocationRepo;
+        this.requestRepo = requestRepo;
     }
 
     @Override
     public ResourceAllocation autoAllocate(Long requestId) {
-
-        ResourceRequest request = requestRepository.findById(requestId).orElse(null);
-        if (request == null) return null;
+        ResourceRequest request = requestRepo.findById(requestId).orElseThrow();
 
         ResourceAllocation allocation = new ResourceAllocation();
-        allocation.setResource(request);
-        allocation.setAllocatedAt(LocalDateTime.now());
-        allocation.setNotes("Auto allocated");
+        allocation.setRequest(request);   // ✅ FIXED METHOD
+        allocation.setStatus("ALLOCATED");
 
-        return allocationRepository.save(allocation);
+        return allocationRepo.save(allocation);
     }
 
     @Override
     public ResourceAllocation getAllocation(Long id) {
-        return allocationRepository.findById(id).orElse(null);
+        return allocationRepo.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<ResourceAllocation> getAllAllocations() {
+        return allocationRepo.findAll();
     }
 }

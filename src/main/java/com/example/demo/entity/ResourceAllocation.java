@@ -1,23 +1,25 @@
-package com.example.demo.controller;
+package com.example.demo.entity;
 
-import com.example.demo.entity.ResourceAllocation;
-import com.example.demo.service.ResourceAllocationService;
-import org.springframework.web.bind.annotation.*;
+import jakarta.persistence.*;
 
-import java.util.List;
+@Entity
+public class ResourceAllocation {
 
-@RestController
-@RequestMapping("/allocations")
-public class ResourceAllocationController {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    private final ResourceAllocationService allocationService;
+    @ManyToOne
+    private ResourceRequest request;
 
-    public ResourceAllocationController(ResourceAllocationService allocationService) {
-        this.allocationService = allocationService;
-    }
+    private String status;
 
-    @GetMapping
-    public List<ResourceAllocation> getAllAllocations() {
-        return allocationService.getAllAllocations();
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public ResourceRequest getRequest() { return request; }
+    public void setRequest(ResourceRequest request) { this.request = request; }
+
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
 }
