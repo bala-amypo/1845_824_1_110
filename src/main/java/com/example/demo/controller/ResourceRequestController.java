@@ -1,41 +1,23 @@
-package com.example.demo.entity;
+package com.example.demo.controller;
 
-import jakarta.persistence.*;
-import java.time.LocalDateTime;
+import com.example.demo.entity.ResourceRequest;
+import com.example.demo.service.ResourceRequestService;
+import org.springframework.web.bind.annotation.*;
 
-@Entity
-public class ResourceRequest {
+import java.util.List;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@RestController
+@RequestMapping("/requests")
+public class ResourceRequestController {
 
-    private String resourceType;
-    private String status;
-    private LocalDateTime startTime;
+    private final ResourceRequestService requestService;
 
-    @ManyToOne
-    private User user;
+    public ResourceRequestController(ResourceRequestService requestService) {
+        this.requestService = requestService;
+    }
 
-    public ResourceRequest() {}
-
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
-    public String getResourceType() { return resourceType; }
-    public void setResourceType(String resourceType) { this.resourceType = resourceType; }
-
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
-
-    public LocalDateTime getStartTime() { return startTime; }
-    public void setStartTime(LocalDateTime startTime) { this.startTime = startTime; }
-
-    public User getUser() { return user; }
-    public void setUser(User user) { this.user = user; }
-
-    // ✅ REQUIRED BY TEST
-    public User getRequestedBy() { return user; }
-    public void setRequestedBy(User user) { this.user = user; }
+    @GetMapping
+    public List<ResourceRequest> getAllRequests() {
+        return requestService.getAllRequests();
+    }
 }
-

@@ -1,34 +1,23 @@
-package com.example.demo.entity;
+package com.example.demo.controller;
 
-import jakarta.persistence.*;
-import java.time.LocalDateTime;
+import com.example.demo.entity.ResourceAllocation;
+import com.example.demo.service.ResourceAllocationService;
+import org.springframework.web.bind.annotation.*;
 
-@Entity
-public class ResourceAllocation {
+import java.util.List;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@RestController
+@RequestMapping("/allocations")
+public class ResourceAllocationController {
 
-    private LocalDateTime allocatedAt;
-    private String notes;
+    private final ResourceAllocationService allocationService;
 
-    @ManyToOne
-    private ResourceRequest request;
+    public ResourceAllocationController(ResourceAllocationService allocationService) {
+        this.allocationService = allocationService;
+    }
 
-    public ResourceAllocation() {}
-
-    public Long getId() { return id; }
-
-    public LocalDateTime getAllocatedAt() { return allocatedAt; }
-    public void setAllocatedAt(LocalDateTime allocatedAt) { this.allocatedAt = allocatedAt; }
-
-    public String getNotes() { return notes; }
-    public void setNotes(String notes) { this.notes = notes; }
-
-    public ResourceRequest getRequest() { return request; }
-    public void setRequest(ResourceRequest request) { this.request = request; }
-
-    // ✅ REQUIRED BY TEST
-    public ResourceRequest getResource() { return request; }
+    @GetMapping
+    public List<ResourceAllocation> getAllAllocations() {
+        return allocationService.getAllAllocations();
+    }
 }
