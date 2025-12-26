@@ -11,4 +11,3 @@ public interface AllocationRuleService {
 
     List<AllocationRule> getAllRules();
 }
-
