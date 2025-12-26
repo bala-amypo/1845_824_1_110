@@ -1,20 +1,30 @@
 package com.example.demo.security;
 
-import org.springframework.stereotype.Component;
+import java.util.HashMap;
+import java.util.Map;
 
-@Component
 public class JwtUtil {
 
-    public String generateToken(String email) {
-        return "token_" + email;
+    private final String secret;
+    private final int expiry;
+
+    public JwtUtil(String secret, int expiry) {
+        this.secret = secret;
+        this.expiry = expiry;
     }
 
-    public String extractEmail(String token) {
-        if (token == null) return null;
-        return token.replace("token_", "");
+    public String generateToken(long id, String email, String role) {
+        return id + "|" + email + "|" + role;
     }
 
-    public boolean validateToken(String token) {
-        return token != null && token.startsWith("token_");
+    public Map<String, Object> parseClaims(String token) {
+        String[] parts = token.split("\\|");
+
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("id", Long.parseLong(parts[0]));
+        claims.put("email", parts[1]);
+        claims.put("role", parts[2]);
+
+        return claims;
     }
 }
