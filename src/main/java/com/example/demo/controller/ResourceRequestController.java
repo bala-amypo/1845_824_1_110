@@ -23,12 +23,13 @@ public class ResourceRequestController {
     }
 
     @GetMapping("/{id}")
-    public ResourceRequest get(@PathVariable Long id) {
-        return service.getRequest(id);
+    public ResourceRequest getRequest(@PathVariable Long id) {
+    return service.getRequest(id);
     }
 
     @GetMapping
     public List<ResourceRequest> getAll() {
-        return service.getAllRequests();
+    return service.getAllRequests();
     }
+
 }
