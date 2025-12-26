@@ -6,6 +6,8 @@ import com.example.demo.service.UserService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -23,9 +25,19 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("User already exists");
         }
 
-        // ✅ IMPORTANT: Password hashing
         user.setPassword(encoder.encode(user.getPassword()));
-
         return repository.save(user);
+    }
+
+    // ✅ REQUIRED FOR UserController
+    @Override
+    public List<User> getAllUsers() {
+        return repository.findAll();
+    }
+
+    @Override
+    public User getUser(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
     }
 }
