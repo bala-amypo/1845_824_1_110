@@ -14,11 +14,11 @@ public class JwtUtil {
 
     private static final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
-    // ✅ REQUIRED: NO-ARG CONSTRUCTOR
+    // ✅ REQUIRED: no-argument constructor
     public JwtUtil() {
     }
 
-    // ✅ REQUIRED SIGNATURE
+    // ✅ REQUIRED BY TESTS
     public String generateToken(String email, String role) {
         return Jwts.builder()
                 .setSubject(email)
@@ -29,6 +29,12 @@ public class JwtUtil {
                 .compact();
     }
 
-    // ✅ REQUIRED BY TEST
+    // ✅ REQUIRED BY TESTS
     public Claims parseClaims(String token) {
         return Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+    }
+}
