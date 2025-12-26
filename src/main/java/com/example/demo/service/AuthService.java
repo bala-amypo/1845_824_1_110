@@ -4,7 +4,6 @@ import com.example.demo.entity.User;
 
 public interface AuthService {
 
-    User register(User user);
-
+    // ✅ TEST EXPECTS THIS SIGNATURE
     String login(User user);
 }

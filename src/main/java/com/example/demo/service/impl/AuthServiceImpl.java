@@ -17,15 +17,16 @@ public class AuthServiceImpl implements AuthService {
         this.jwtUtil = jwtUtil;
     }
 
+    // ✅ MUST MATCH INTERFACE EXACTLY
     @Override
-    public String login(String email, String password) {
+    public String login(User user) {
 
-        User user = userRepository.findByEmail(email);
+        User existing = userRepository.findByEmail(user.getEmail());
 
-        if (user == null || !user.getPassword().equals(password)) {
+        if (existing == null || !existing.getPassword().equals(user.getPassword())) {
             throw new RuntimeException("Invalid credentials");
         }
 
-        return jwtUtil.generateToken(user.getEmail(), user.getRole());
+        return jwtUtil.generateToken(existing.getEmail(), existing.getRole());
     }
 }
