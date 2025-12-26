@@ -1,33 +1,34 @@
-package com.example.demo.service.impl;
-
-import com.example.demo.entity.ResourceRequest;
-import com.example.demo.repository.ResourceRequestRepository;
-import com.example.demo.service.ResourceRequestService;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-
-@Service   // ✅ THIS IS WHAT CREATES THE BEAN
+@Service
 public class ResourceRequestServiceImpl implements ResourceRequestService {
 
-    private final ResourceRequestRepository repository;
+    private final ResourceRequestRepository repo;
+    private final UserRepository userRepo;
 
-    public ResourceRequestServiceImpl(ResourceRequestRepository repository) {
-        this.repository = repository;
+    public ResourceRequestServiceImpl(
+            ResourceRequestRepository repo,
+            UserRepository userRepo) {
+        this.repo = repo;
+        this.userRepo = userRepo;
     }
 
     @Override
-    public ResourceRequest createRequest(ResourceRequest request) {
-        return repository.save(request);
+    public ResourceRequest createRequest(Long userId, ResourceRequest request) {
+        request.setRequestedBy(userRepo.findById(userId).orElse(null));
+        return repo.save(request);
     }
 
     @Override
-    public ResourceRequest getRequest(Long id) {
-        return repository.findById(id).orElse(null);
+    public List<ResourceRequest> getRequestsByUser(Long userId) {
+        return repo.findRequestsByUser(userId);
     }
 
     @Override
-    public List<ResourceRequest> getAllRequests() {
-        return repository.findAll();
+    public ResourceRequest updateRequestStatus(Long id, String status) {
+        ResourceRequest rr = repo.findById(id).orElse(null);
+        if (rr != null) {
+            rr.setStatus(status);
+            return repo.save(rr);
+        }
+        return null;
     }
 }

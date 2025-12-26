@@ -5,9 +5,9 @@ import java.util.List;
 
 public interface ResourceRequestService {
 
-    ResourceRequest createRequest(ResourceRequest request);
+    ResourceRequest createRequest(Long userId, ResourceRequest request);
 
-    ResourceRequest getRequest(Long id);
+    List<ResourceRequest> getRequestsByUser(Long userId);
 
-    List<ResourceRequest> getAllRequests();
+    ResourceRequest updateRequestStatus(Long id, String status);
 }

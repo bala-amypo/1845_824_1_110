@@ -1,9 +1,7 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 public class ResourceRequest {
@@ -12,41 +10,27 @@ public class ResourceRequest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String resourceType;
-    private Integer quantity;
-    private Boolean active;
+    private String purpose;
+    private String status;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
+
+    @ManyToOne
+    private User requestedBy;
 
     // ===== GETTERS =====
-    public Long getId() {
-        return id;
-    }
-
-    public String getResourceType() {
-        return resourceType;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public Boolean getActive() {
-        return active;
-    }
+    public Long getId() { return id; }
+    public String getPurpose() { return purpose; }
+    public String getStatus() { return status; }
+    public LocalDateTime getStartTime() { return startTime; }
+    public LocalDateTime getEndTime() { return endTime; }
+    public User getRequestedBy() { return requestedBy; }
 
     // ===== SETTERS =====
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setResourceType(String resourceType) {
-        this.resourceType = resourceType;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
+    public void setId(Long id) { this.id = id; }
+    public void setPurpose(String purpose) { this.purpose = purpose; }
+    public void setStatus(String status) { this.status = status; }
+    public void setStartTime(LocalDateTime startTime) { this.startTime = startTime; }
+    public void setEndTime(LocalDateTime endTime) { this.endTime = endTime; }
+    public void setRequestedBy(User requestedBy) { this.requestedBy = requestedBy; }
 }
