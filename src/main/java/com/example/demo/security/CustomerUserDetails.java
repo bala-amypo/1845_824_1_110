@@ -14,6 +14,6 @@ public class CustomerUserDetails {
     }
 
     public User loadUserByEmail(String email) {
-        return userRepository.findByEmail(email).orElse(null);
+        return userRepository.findByEmail(email);
     }
 }
