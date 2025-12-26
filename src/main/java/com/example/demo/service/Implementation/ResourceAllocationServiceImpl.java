@@ -22,9 +22,15 @@ public class ResourceAllocationServiceImpl implements ResourceAllocationService 
         this.requestRepository = requestRepository;
     }
 
-    // ✅ REQUIRED OVERRIDE
+    // ✅ FIX 1
     @Override
     public List<ResourceAllocation> getAllAllocations() {
         return allocationRepository.findAll();
+    }
+
+    // ✅ FIX 2
+    @Override
+    public ResourceAllocation getAllocation(Long id) {
+        return allocationRepository.findById(id).orElse(null);
     }
 }
