@@ -9,9 +9,6 @@ public interface ResourceService {
 
     List<Resource> getAllResources();
 
-    Resource getResourceById(Long id);
-
-    Resource updateResource(Long id, Resource resource);
-
+    // ✅ REQUIRED BY TEST / COMPILER
     void deleteResource(Long id);
 }

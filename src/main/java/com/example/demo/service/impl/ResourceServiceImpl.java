@@ -7,44 +7,39 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service   // ⭐ THIS CREATES THE BEAN
+@Service
 public class ResourceServiceImpl implements ResourceService {
 
-    private final ResourceRepository repository;
+    private final ResourceRepository repo;
 
-    public ResourceServiceImpl(ResourceRepository repository) {
-        this.repository = repository;
+    public ResourceServiceImpl(ResourceRepository repo) {
+        this.repo = repo;
     }
 
     @Override
     public Resource createResource(Resource resource) {
-        return repository.save(resource);
+
+        if (resource.getResourceName() == null ||
+            resource.getResourceType() == null ||
+            resource.getCapacity() == null) {
+            throw new RuntimeException("Invalid resource");
+        }
+
+        if (repo.existsByResourceName(resource.getResourceName())) {
+            throw new RuntimeException("Resource already exists");
+        }
+
+        return repo.save(resource);
     }
 
     @Override
     public List<Resource> getAllResources() {
-        return repository.findAll();
+        return repo.findAll();
     }
 
-    @Override
-    public Resource getResourceById(Long id) {
-        return repository.findById(id).orElse(null);
-    }
-
-    @Override
-    public Resource updateResource(Long id, Resource resource) {
-        Resource existing = repository.findById(id).orElse(null);
-        if (existing != null) {
-            existing.setName(resource.getName());
-            existing.setType(resource.getType());
-            existing.setActive(resource.getActive());
-            return repository.save(existing);
-        }
-        return null;
-    }
-
+    // ✅ REQUIRED METHOD — SIMPLE IMPLEMENTATION
     @Override
     public void deleteResource(Long id) {
-        repository.deleteById(id);
+        repo.deleteById(id);
     }
 }
