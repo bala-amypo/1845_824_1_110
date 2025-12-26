@@ -6,16 +6,16 @@ import jakarta.persistence.*;
 public class AllocationRule {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String ruleName;
     private String ruleType;
     private Integer priorityWeight;
-    private String description;
     private Boolean active = true;
+    private String description;
 
-    public AllocationRule() { }
+    public AllocationRule() {}
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -27,15 +27,11 @@ public class AllocationRule {
     public void setRuleType(String ruleType) { this.ruleType = ruleType; }
 
     public Integer getPriorityWeight() { return priorityWeight; }
-    public void setPriorityWeight(Integer priorityWeight) {
-        this.priorityWeight = priorityWeight;
-    }
-
-    public String getDescription() { return description; }
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    public void setPriorityWeight(Integer priorityWeight) { this.priorityWeight = priorityWeight; }
 
     public Boolean getActive() { return active; }
     public void setActive(Boolean active) { this.active = active; }
+
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
 }
