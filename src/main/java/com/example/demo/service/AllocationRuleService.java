@@ -7,7 +7,11 @@ public interface AllocationRuleService {
 
     AllocationRule createRule(AllocationRule rule);
 
-    AllocationRule getRule(Long id);
+    AllocationRule updateRule(Long id, AllocationRule rule);
+
+    AllocationRule getRuleById(Long id);
 
     List<AllocationRule> getAllRules();
+
+    void deleteRule(Long id);
 }
