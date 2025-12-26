@@ -25,8 +25,9 @@ public class ResourceRequestServiceImpl implements ResourceRequestService {
     public ResourceRequest createRequest(ResourceRequest request, Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
+        request.setRequestedBy(user);
 
-        request.setUser(user);
+
         request.setStatus("PENDING");
 
         return requestRepository.save(request);
