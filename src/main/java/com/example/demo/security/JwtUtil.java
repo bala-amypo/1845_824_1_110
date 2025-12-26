@@ -4,31 +4,27 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.stereotype.Component;
+
 import java.security.Key;
 import java.util.Date;
 
+@Component   // ⭐ THIS IS MANDATORY
 public class JwtUtil {
 
-    private final Key key;
-    private final long validityInMs;
+    private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
-    public JwtUtil(String secretKey, long validityInMs) {
-        this.key = Keys.hmacShaKeyFor(secretKey.getBytes());
-        this.validityInMs = validityInMs;
-    }
-
-    public String generateToken(Long userId, String email, String role) {
+    public String generateToken(String email, String role) {
         return Jwts.builder()
                 .setSubject(email)
-                .claim("userId", userId)
                 .claim("role", role)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + validityInMs))
-                .signWith(key, SignatureAlgorithm.HS256)
+                .setExpiration(new Date(System.currentTimeMillis() + 60 * 60 * 1000))
+                .signWith(key)
                 .compact();
     }
 
-    public Claims parseClaims(String token) {
+    public Claims extractClaims(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(key)
                 .build()
