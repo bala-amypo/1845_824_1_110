@@ -1,17 +1,17 @@
-// package com.example.demo.security;
+package com.example.demo.security;
 
-// import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Component;
 
-// @Component
-// public class JwtAuthenticationFilter {
+@Component
+public class JwtAuthenticationFilter {
 
-//     private final JwtUtil jwtUtil;
+    private final JwtUtil jwtUtil;
 
-//     public JwtAuthenticationFilter(JwtUtil jwtUtil) {
-//         this.jwtUtil = jwtUtil;
-//     }
+    public JwtAuthenticationFilter(JwtUtil jwtUtil) {
+        this.jwtUtil = jwtUtil;
+    }
 
-//     public boolean authenticate(String token) {
-//         return jwtUtil.validateToken(token);
-//     }
-// }
+    public boolean authenticate(String token) {
+        return jwtUtil.validateToken(token);
+    }
+}
