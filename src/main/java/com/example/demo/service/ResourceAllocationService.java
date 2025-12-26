@@ -9,5 +9,6 @@ public interface ResourceAllocationService {
 
     ResourceAllocation getAllocation(Long id);
 
-    ResourceAllocation autoAllocate(Long requestId); // ✅ REQUIRED
+    // ✅ ADD THIS EXACT METHOD
+    ResourceAllocation autoAllocate(Long requestId);
 }

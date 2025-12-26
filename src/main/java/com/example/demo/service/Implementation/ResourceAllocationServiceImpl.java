@@ -1,4 +1,4 @@
-package com.example.demo.service.impl;
+package com.example.demo.service.Implementation;
 
 import com.example.demo.entity.ResourceAllocation;
 import com.example.demo.entity.ResourceRequest;
@@ -24,7 +24,7 @@ public class ResourceAllocationServiceImpl implements ResourceAllocationService 
         this.requestRepository = requestRepository;
     }
 
-    // ✅ FIXED
+    // ✅ FIXED: returns allocations, not requests
     @Override
     public List<ResourceAllocation> getAllAllocations() {
         return allocationRepository.findAll();
@@ -36,7 +36,7 @@ public class ResourceAllocationServiceImpl implements ResourceAllocationService 
         return allocationRepository.findById(id).orElse(null);
     }
 
-    // ✅ FIXED autoAllocate
+    // ✅ FIXED: converts request → allocation
     @Override
     public ResourceAllocation autoAllocate(Long requestId) {
 
