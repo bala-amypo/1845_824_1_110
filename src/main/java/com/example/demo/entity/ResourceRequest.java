@@ -4,8 +4,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import java.time.LocalDateTime;
 
 @Entity
 public class ResourceRequest {
@@ -15,31 +13,40 @@ public class ResourceRequest {
     private Long id;
 
     private String resourceType;
+    private Integer quantity;
+    private Boolean active;
 
-    @ManyToOne
-    private User requestedBy;
+    // ===== GETTERS =====
+    public Long getId() {
+        return id;
+    }
 
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    public String getResourceType() {
+        return resourceType;
+    }
 
-    private String purpose;
+    public Integer getQuantity() {
+        return quantity;
+    }
 
-    private String status = "PENDING";
+    public Boolean getActive() {
+        return active;
+    }
 
-    public ResourceRequest() {}
+    // ===== SETTERS =====
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public Long getId() { return id; }
-    public String getResourceType() { return resourceType; }
-    public User getRequestedBy() { return requestedBy; }
-    public LocalDateTime getStartTime() { return startTime; }
-    public LocalDateTime getEndTime() { return endTime; }
-    public String getStatus() { return status; }
+    public void setResourceType(String resourceType) {
+        this.resourceType = resourceType;
+    }
 
-    public void setId(Long id) { this.id = id; }
-    public void setResourceType(String resourceType) { this.resourceType = resourceType; }
-    public void setRequestedBy(User requestedBy) { this.requestedBy = requestedBy; }
-    public void setStartTime(LocalDateTime startTime) { this.startTime = startTime; }
-    public void setEndTime(LocalDateTime endTime) { this.endTime = endTime; }
-    public void setPurpose(String purpose) { this.purpose = purpose; }
-    public void setStatus(String status) { this.status = status; }
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
 }
