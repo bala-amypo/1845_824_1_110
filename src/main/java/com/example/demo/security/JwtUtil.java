@@ -1,49 +1,34 @@
 package com.example.demo.security;
 
-import java.util.HashMap;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
+import org.springframework.stereotype.Component;
 
+import java.security.Key;
+import java.util.Date;
+
+@Component
 public class JwtUtil {
 
-    private final long expiryMillis;
-    private final long createdAt = System.currentTimeMillis();
+    private static final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
-    public JwtUtil(String secret, long expiryMillis) {
-        this.expiryMillis = expiryMillis;
+    public String generateToken(String email, String role) {
+        return Jwts.builder()
+                .setSubject(email)
+                .claim("role", role)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + 3600000))
+                .signWith(key)
+                .compact();
     }
 
-    public String generateToken(Long userId, String email, String role) {
-        return "header." + email + "." + role;
-    }
-
-    // ✅ ADD THIS METHOD
-    public boolean validateToken(String token) {
-        try {
-            parseClaims(token);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    public Claims parseClaims(String token) {
-        if (!token.contains(".")) {
-            throw new RuntimeException("Invalid token");
-        }
-
-        if (System.currentTimeMillis() - createdAt > expiryMillis) {
-            throw new RuntimeException("Token expired");
-        }
-
-        String[] parts = token.split("\\.");
-        Claims c = new Claims();
-        c.put("sub", parts[1]);
-        c.put("role", parts[2]);
-        return c;
-    }
-
-    public static class Claims extends HashMap<String, Object> {
-        public String getSubject() {
-            return (String) get("sub");
-        }
+    public Claims parseToken(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
     }
 }

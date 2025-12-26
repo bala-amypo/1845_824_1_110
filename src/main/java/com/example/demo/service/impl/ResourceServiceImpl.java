@@ -5,30 +5,30 @@ import com.example.demo.repository.ResourceRepository;
 import com.example.demo.service.ResourceService;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class ResourceServiceImpl implements ResourceService {
 
-    private final ResourceRepository resourceRepository;
+    private final ResourceRepository repository;
 
-    public ResourceServiceImpl(ResourceRepository resourceRepository) {
-        this.resourceRepository = resourceRepository;
+    public ResourceServiceImpl(ResourceRepository repository) {
+        this.repository = repository;
     }
 
     @Override
-    public Resource createResource(Resource resource) {
-        return resourceRepository.save(resource);
-    }
+    public Resource create(Resource resource) {
 
-    @Override
-    public List<Resource> getAllResources() {
-        return resourceRepository.findAll();
-    }
+        if (resource.getName() == null || resource.getName().trim().isEmpty()) {
+            throw new RuntimeException("Invalid resource");
+        }
 
-    @Override
-    public Resource getResourceById(Long id) {
-        return resourceRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Resource not found"));
+        if (resource.getCapacity() == null || resource.getCapacity() <= 0) {
+            throw new RuntimeException("Invalid resource");
+        }
+
+        if (repository.existsByName(resource.getName())) {
+            throw new RuntimeException("Duplicate resource");
+        }
+
+        return repository.save(resource);
     }
 }
