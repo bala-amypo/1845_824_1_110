@@ -5,16 +5,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class JwtUtil {
 
-    public String generateToken(String username) {
-        return "dummy-token-for-" + username;
+    public String generateToken(String email) {
+        return "token_" + email;
     }
 
-    public String extractUsername(String token) {
+    public String extractEmail(String token) {
         if (token == null) return null;
-        return token.replace("dummy-token-for-", "");
+        return token.replace("token_", "");
     }
 
-    public boolean validateToken(String token, String username) {
-        return token != null && token.equals(generateToken(username));
+    public boolean validateToken(String token) {
+        return token != null && token.startsWith("token_");
     }
 }
