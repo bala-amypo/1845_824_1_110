@@ -10,11 +10,11 @@ import java.util.Date;
 public class JwtUtil {
 
     private final Key key;
-    private final long validity;
+    private final long validityInMs;
 
-    public JwtUtil(String secret, long validity) {
-        this.key = Keys.hmacShaKeyFor(secret.getBytes());
-        this.validity = validity;
+    public JwtUtil(String secretKey, long validityInMs) {
+        this.key = Keys.hmacShaKeyFor(secretKey.getBytes());
+        this.validityInMs = validityInMs;
     }
 
     public String generateToken(Long userId, String email, String role) {
@@ -23,7 +23,7 @@ public class JwtUtil {
                 .claim("userId", userId)
                 .claim("role", role)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + validity))
+                .setExpiration(new Date(System.currentTimeMillis() + validityInMs))
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
