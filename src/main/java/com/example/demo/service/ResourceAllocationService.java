@@ -7,5 +7,7 @@ public interface ResourceAllocationService {
 
     List<ResourceAllocation> getAllAllocations();
 
-    ResourceAllocation getAllocation(Long id); // 🔥 REQUIRED
+    ResourceAllocation getAllocation(Long id);
+
+    ResourceAllocation autoAllocate(Long requestId); // ✅ REQUIRED
 }
