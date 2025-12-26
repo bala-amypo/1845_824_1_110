@@ -1,7 +1,7 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 public class ResourceAllocation {
@@ -10,52 +10,33 @@ public class ResourceAllocation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String resource;
-
-    // ✅ Correct relationship
-    @OneToOne
-    @JoinColumn(name = "request_id")
+    @ManyToOne
     private ResourceRequest request;
 
-    // ✅ Correct type + name
-    private LocalDate allocationDate;
+    private LocalDateTime allocatedAt;
 
-    private Boolean conflictFlag;
-    private String notes;
+    // ✅ REQUIRED getters & setters
+    public Long getId() {
+        return id;
+    }
 
-    // 🔹 Constructors
-    public ResourceAllocation() {}
-
-    public ResourceAllocation(Long id, String resource, ResourceRequest request,
-                              LocalDate allocationDate, Boolean conflictFlag, String notes) {
+    public void setId(Long id) {
         this.id = id;
-        this.resource = resource;
+    }
+
+    public ResourceRequest getRequest() {
+        return request;
+    }
+
+    public void setRequest(ResourceRequest request) {
         this.request = request;
-        this.allocationDate = allocationDate;
-        this.conflictFlag = conflictFlag;
-        this.notes = notes;
     }
 
-    // 🔹 Getters & Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
-    public String getResource() { return resource; }
-    public void setResource(String resource) { this.resource = resource; }
-
-    public ResourceRequest getRequest() { return request; }
-    public void setRequest(ResourceRequest request) { this.request = request; }
-
-    public LocalDate getAllocationDate() { return allocationDate; }
-    public void setAllocationDate(LocalDate allocationDate) {
-        this.allocationDate = allocationDate;
+    public LocalDateTime getAllocatedAt() {
+        return allocatedAt;
     }
 
-    public Boolean getConflictFlag() { return conflictFlag; }
-    public void setConflictFlag(Boolean conflictFlag) {
-        this.conflictFlag = conflictFlag;
+    public void setAllocatedAt(LocalDateTime allocatedAt) {
+        this.allocatedAt = allocatedAt;
     }
-
-    public String getNotes() { return notes; }
-    public void setNotes(String notes) { this.notes = notes; }
 }

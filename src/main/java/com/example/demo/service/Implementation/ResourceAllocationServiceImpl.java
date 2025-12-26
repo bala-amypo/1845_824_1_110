@@ -18,25 +18,22 @@ public class ResourceAllocationServiceImpl implements ResourceAllocationService 
 
     public ResourceAllocationServiceImpl(
             ResourceAllocationRepository allocationRepository,
-            ResourceRequestRepository requestRepository
-    ) {
+            ResourceRequestRepository requestRepository) {
+
         this.allocationRepository = allocationRepository;
         this.requestRepository = requestRepository;
     }
 
-    // ✅ FIXED: returns allocations, not requests
     @Override
     public List<ResourceAllocation> getAllAllocations() {
         return allocationRepository.findAll();
     }
 
-    // ✅ FIXED
     @Override
     public ResourceAllocation getAllocation(Long id) {
         return allocationRepository.findById(id).orElse(null);
     }
 
-    // ✅ FIXED: converts request → allocation
     @Override
     public ResourceAllocation autoAllocate(Long requestId) {
 

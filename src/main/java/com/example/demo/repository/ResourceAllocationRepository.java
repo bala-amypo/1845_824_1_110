@@ -1,8 +1,10 @@
 package com.example.demo.repository;
 
-import com.example.demo.entity.ResourceRequest;
+import com.example.demo.entity.ResourceAllocation;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface ResourceAllocationRepository
-        extends JpaRepository<ResourceRequest, Long> {
+        extends JpaRepository<ResourceAllocation, Long> {
 }
