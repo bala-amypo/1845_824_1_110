@@ -1,56 +1,33 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.Resource;
 import com.example.demo.entity.ResourceAllocation;
-import com.example.demo.entity.ResourceRequest;
 import com.example.demo.repository.ResourceAllocationRepository;
-import com.example.demo.repository.ResourceRepository;
-import com.example.demo.repository.ResourceRequestRepository;
 import com.example.demo.service.ResourceAllocationService;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 
+@Service   // ⭐ REQUIRED — THIS CREATES THE BEAN
 public class ResourceAllocationServiceImpl implements ResourceAllocationService {
 
-    private final ResourceRequestRepository requestRepository;
-    private final ResourceRepository resourceRepository;
-    private final ResourceAllocationRepository allocationRepository;
+    private final ResourceAllocationRepository repository;
 
-    public ResourceAllocationServiceImpl(ResourceRequestRepository requestRepository,
-                                         ResourceRepository resourceRepository,
-                                         ResourceAllocationRepository allocationRepository) {
-        this.requestRepository = requestRepository;
-        this.resourceRepository = resourceRepository;
-        this.allocationRepository = allocationRepository;
+    public ResourceAllocationServiceImpl(ResourceAllocationRepository repository) {
+        this.repository = repository;
     }
 
     @Override
-    public ResourceAllocation autoAllocate(Long requestId) {
-
-        ResourceRequest req = requestRepository.findById(requestId)
-                .orElseThrow(() -> new RuntimeException("Request not found"));
-
-        List<Resource> resources =
-                resourceRepository.findByResourceType(req.getResourceType());
-
-        if (resources.isEmpty()) {
-            throw new RuntimeException("No resource available");
-        }
-
-        ResourceAllocation allocation = new ResourceAllocation();
-        allocation.setResource(resources.get(0));
-        allocation.setRequest(req);
-
-        return allocationRepository.save(allocation);
-    }
-
-    @Override
-    public ResourceAllocation getAllocation(Long id) {
-        return allocationRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Allocation not found"));
+    public ResourceAllocation createAllocation(ResourceAllocation allocation) {
+        return repository.save(allocation);
     }
 
     @Override
     public List<ResourceAllocation> getAllAllocations() {
-        return allocationRepository.findAll();
+        return repository.findAll();
+    }
+
+    @Override
+    public ResourceAllocation getAllocationById(Long id) {
+        return repository.findById(id).orElse(null);
     }
 }

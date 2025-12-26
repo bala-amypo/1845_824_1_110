@@ -5,9 +5,9 @@ import java.util.List;
 
 public interface ResourceAllocationService {
 
-    ResourceAllocation autoAllocate(Long requestId);
-
-    ResourceAllocation getAllocation(Long id);
+    ResourceAllocation createAllocation(ResourceAllocation allocation);
 
     List<ResourceAllocation> getAllAllocations();
+
+    ResourceAllocation getAllocationById(Long id);
 }
