@@ -12,47 +12,23 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    private final Key key;
-    private final long expirationMs;
+    private static final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
-    // constructor used in tests also
-    public JwtUtil() {
-        this.key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-        this.expirationMs = 3600000; // 1 hour
-    }
-
-    // constructor for tests (your TestNG uses this)
-    public JwtUtil(String secret, long expirationMs) {
-        this.key = Keys.hmacShaKeyFor(secret.getBytes());
-        this.expirationMs = expirationMs;
-    }
-
-    public String generateToken(Long userId, String email, String role) {
+    public String generateToken(String email, String role) {
         return Jwts.builder()
                 .setSubject(email)
-                .claim("userId", userId)
                 .claim("role", role)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + expirationMs))
+                .setExpiration(new Date(System.currentTimeMillis() + 3600000))
                 .signWith(key)
                 .compact();
     }
 
-    public Claims parseClaims(String token) {
+    public Claims parseToken(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(key)
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
-    }
-
-    // ✅ THIS METHOD WAS MISSING
-    public boolean validateToken(String token) {
-        try {
-            parseClaims(token);
-            return true;
-        } catch (Exception ex) {
-            return false;
-        }
     }
 }
