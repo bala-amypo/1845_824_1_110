@@ -1,34 +1,38 @@
+package com.example.demo.service.impl;
+
+import com.example.demo.entity.ResourceRequest;
+import com.example.demo.repository.ResourceRequestRepository;
+import com.example.demo.repository.UserRepository;
+import com.example.demo.service.ResourceRequestService;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
 @Service
 public class ResourceRequestServiceImpl implements ResourceRequestService {
 
-    private final ResourceRequestRepository repo;
-    private final UserRepository userRepo;
+    private final ResourceRequestRepository requestRepository;
+    private final UserRepository userRepository;
 
-    public ResourceRequestServiceImpl(
-            ResourceRequestRepository repo,
-            UserRepository userRepo) {
-        this.repo = repo;
-        this.userRepo = userRepo;
+    public ResourceRequestServiceImpl(ResourceRequestRepository requestRepository,
+                                      UserRepository userRepository) {
+        this.requestRepository = requestRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
     public ResourceRequest createRequest(Long userId, ResourceRequest request) {
-        request.setRequestedBy(userRepo.findById(userId).orElse(null));
-        return repo.save(request);
+        request.setRequestedBy(userRepository.findById(userId).orElse(null));
+        return requestRepository.save(request);
     }
 
     @Override
-    public List<ResourceRequest> getRequestsByUser(Long userId) {
-        return repo.findRequestsByUser(userId);
+    public ResourceRequest getRequest(Long id) {
+        return requestRepository.findById(id).orElse(null);
     }
 
     @Override
-    public ResourceRequest updateRequestStatus(Long id, String status) {
-        ResourceRequest rr = repo.findById(id).orElse(null);
-        if (rr != null) {
-            rr.setStatus(status);
-            return repo.save(rr);
-        }
-        return null;
+    public List<ResourceRequest> getAllRequests() {
+        return requestRepository.findAll();
     }
 }
