@@ -7,7 +7,11 @@ public interface ResourceService {
 
     Resource createResource(Resource resource);
 
-    Resource getResource(Long id);
-
     List<Resource> getAllResources();
+
+    Resource getResourceById(Long id);
+
+    Resource updateResource(Long id, Resource resource);
+
+    void deleteResource(Long id);
 }
