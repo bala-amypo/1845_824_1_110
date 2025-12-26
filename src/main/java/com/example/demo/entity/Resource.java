@@ -1,11 +1,9 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import java.time.LocalDateTime;
 
 @Entity
 public class Resource {
@@ -14,24 +12,43 @@ public class Resource {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
-    private String resourceName;
+    private String name;
+    private String type;
+    private Boolean active;
 
-    private String resourceType;
+    // ✅ GETTERS
 
-    private Integer capacity;
+    public Long getId() {
+        return id;
+    }
 
-    private String location;
+    public String getName() {
+        return name;
+    }
 
-    private LocalDateTime createdAt = LocalDateTime.now();
+    public String getType() {
+        return type;
+    }
 
-    public Resource() {}
+    public Boolean getActive() {
+        return active;
+    }
 
-    public String getResourceName() { return resourceName; }
-    public String getResourceType() { return resourceType; }
-    public Integer getCapacity() { return capacity; }
+    // ✅ SETTERS
 
-    public void setResourceName(String resourceName) { this.resourceName = resourceName; }
-    public void setResourceType(String resourceType) { this.resourceType = resourceType; }
-    public void setCapacity(Integer capacity) { this.capacity = capacity; }
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
 }
