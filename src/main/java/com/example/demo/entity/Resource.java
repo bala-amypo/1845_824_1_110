@@ -1,34 +1,29 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Resource {
 
     @Id
+    @GeneratedValue
     private Long id;
+
     private String resourceName;
     private String resourceType;
-    private int capacity;
-    private Boolean active;
+    private Integer capacity;
 
-    public Resource() {
-    }
-
-    // ✅ TEST EXPECTED METHODS
-    public String getName() { return resourceName; }
-    public void setName(String name) { this.resourceName = name; }
-
-    public String getType() { return resourceType; }
-    public void setType(String type) { this.resourceType = type; }
-
-    public int getCapacity() { return capacity; }
-    public void setCapacity(int capacity) { this.capacity = capacity; }
-
-    public Boolean getActive() { return active; }
-    public void setActive(Boolean active) { this.active = active; }
+    public Resource() { }
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
+
+    public String getResourceName() { return resourceName; }
+    public void setResourceName(String resourceName) { this.resourceName = resourceName; }
+
+    public String getResourceType() { return resourceType; }
+    public void setResourceType(String resourceType) { this.resourceType = resourceType; }
+
+    public Integer getCapacity() { return capacity; }
+    public void setCapacity(Integer capacity) { this.capacity = capacity; }
 }
