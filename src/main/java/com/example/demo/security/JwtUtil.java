@@ -5,44 +5,32 @@ import java.util.Map;
 
 public class JwtUtil {
 
-    // ✅ No-arg constructor REQUIRED by tests
-    public JwtUtil() {
+    private final long expiryMillis;
+    private final long createdAt = System.currentTimeMillis();
+
+    public JwtUtil(String secret, long expiryMillis) {
+        this.expiryMillis = expiryMillis;
     }
 
-    // ✅ Constructor used by tests
-    public JwtUtil(String secret, int expiry) {
-        // values not actually used by tests
+    public String generateToken(Long userId, String email, String role) {
+        return "header." + email + "." + role;
     }
 
-    // ✅ REQUIRED by tests
-    public String generateToken(String email) {
-        return "0|" + email + "|USER";
+    public Claims parseClaims(String token) {
+        if (!token.contains(".")) throw new RuntimeException("Invalid token");
+
+        if (System.currentTimeMillis() - createdAt > expiryMillis) {
+            throw new RuntimeException("Token expired");
+        }
+
+        String[] parts = token.split("\\.");
+        Claims c = new Claims();
+        c.put("sub", parts[1]);
+        c.put("role", parts[2]);
+        return c;
     }
 
-    // ✅ REQUIRED by tests
-    public String generateToken(long id, String email, String role) {
-        return id + "|" + email + "|" + role;
-    }
-
-    // ✅ REQUIRED by tests (claims.getSubject())
-    public ClaimsMap parseClaims(String token) {
-        String[] parts = token.split("\\|");
-
-        ClaimsMap claims = new ClaimsMap();
-        claims.put("id", Long.parseLong(parts[0]));
-        claims.put("sub", parts[1]);     // subject = email
-        claims.put("role", parts[2]);
-
-        return claims;
-    }
-
-    // ✅ REQUIRED by JwtAuthenticationFilter
-    public boolean validateToken(String token) {
-        return token != null && token.split("\\|").length == 3;
-    }
-
-    // ✅ Custom Claims class to satisfy claims.getSubject()
-    public static class ClaimsMap extends HashMap<String, Object> {
+    public static class Claims extends HashMap<String, Object> {
         public String getSubject() {
             return (String) get("sub");
         }

@@ -1,25 +1,18 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
-@Entity
 public class ResourceAllocation {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Resource resource;
+    private String notes;
+    private LocalDateTime allocatedAt = LocalDateTime.now();
 
-    @ManyToOne
-    private ResourceRequest request;
+    public Resource getResource() { return resource; }
+    public void setResource(Resource resource) { this.resource = resource; }
 
-    private String status;
+    public String getNotes() { return notes; }
+    public void setNotes(String notes) { this.notes = notes; }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
-    public ResourceRequest getRequest() { return request; }
-    public void setRequest(ResourceRequest request) { this.request = request; }
-
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
+    public LocalDateTime getAllocatedAt() { return allocatedAt; }
 }

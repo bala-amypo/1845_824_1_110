@@ -1,14 +1,7 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.*;
-
-@Entity
 public class User {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String fullName;
     private String email;
     private String password;
@@ -16,7 +9,6 @@ public class User {
 
     public User() {}
 
-    // ✅ REQUIRED BY TEST
     public User(String fullName, String email, String password, String role) {
         this.fullName = fullName;
         this.email = email;
