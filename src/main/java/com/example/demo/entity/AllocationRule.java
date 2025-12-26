@@ -12,6 +12,8 @@ public class AllocationRule {
     private String ruleName;
     private String ruleType;
     private Integer priorityWeight;
+    private String description;
+    private Boolean active = true;
 
     public AllocationRule() { }
 
@@ -25,5 +27,15 @@ public class AllocationRule {
     public void setRuleType(String ruleType) { this.ruleType = ruleType; }
 
     public Integer getPriorityWeight() { return priorityWeight; }
-    public void setPriorityWeight(Integer priorityWeight) { this.priorityWeight = priorityWeight; }
+    public void setPriorityWeight(Integer priorityWeight) {
+        this.priorityWeight = priorityWeight;
+    }
+
+    public String getDescription() { return description; }
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Boolean getActive() { return active; }
+    public void setActive(Boolean active) { this.active = active; }
 }

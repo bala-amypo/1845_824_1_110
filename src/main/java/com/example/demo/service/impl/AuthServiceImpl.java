@@ -4,29 +4,35 @@ import com.example.demo.entity.User;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.security.JwtUtil;
 import com.example.demo.service.AuthService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AuthServiceImpl implements AuthService {
 
-    private final UserRepository userRepository;
+    private final UserRepository userRepo;
     private final JwtUtil jwtUtil;
+    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-    public AuthServiceImpl(UserRepository userRepository, JwtUtil jwtUtil) {
-        this.userRepository = userRepository;
+    public AuthServiceImpl(UserRepository userRepo, JwtUtil jwtUtil) {
+        this.userRepo = userRepo;
         this.jwtUtil = jwtUtil;
     }
 
-    // ✅ MUST MATCH INTERFACE EXACTLY
     @Override
-    public String login(User user) {
+    public String login(User input) {
 
-        User existing = userRepository.findByEmail(user.getEmail());
+        User stored = userRepo.findByEmail(input.getEmail())
+                .orElseThrow(() -> new RuntimeException("Invalid credentials"));
 
-        if (existing == null || !existing.getPassword().equals(user.getPassword())) {
+        if (!encoder.matches(input.getPassword(), stored.getPassword())) {
             throw new RuntimeException("Invalid credentials");
         }
 
-        return jwtUtil.generateToken(existing.getEmail(), existing.getRole());
+        return jwtUtil.generateToken(
+                stored.getId(),
+                stored.getEmail(),
+                stored.getRole()
+        );
     }
 }
