@@ -11,28 +11,38 @@ public class ResourceAllocation {
     private Long id;
 
     @ManyToOne
-    private ResourceRequest resource;
+    private ResourceRequest request;
 
-    private String notes;
     private LocalDateTime allocatedAt;
+    private String notes;
 
-    public ResourceAllocation() {}
+    // ✅ REQUIRED SETTERS / GETTERS
 
-    public Long getId() { return id; }
-
-    public ResourceRequest getResource() {
-        return resource;
+    public void setRequest(ResourceRequest request) {
+        this.request = request;
     }
 
-    public void setResource(ResourceRequest resource) {
-        this.resource = resource;
+    public ResourceRequest getRequest() {
+        return request;
     }
 
-    public String getNotes() { return notes; }
-    public void setNotes(String notes) { this.notes = notes; }
-
-    public LocalDateTime getAllocatedAt() { return allocatedAt; }
     public void setAllocatedAt(LocalDateTime allocatedAt) {
         this.allocatedAt = allocatedAt;
+    }
+
+    public LocalDateTime getAllocatedAt() {
+        return allocatedAt;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

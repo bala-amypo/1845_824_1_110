@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 public class ResourceRequest {
@@ -10,19 +11,65 @@ public class ResourceRequest {
     private Long id;
 
     private String resourceType;
+    private String status;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
+    private String purpose;
 
     @ManyToOne
-    private User user;
+    private User requestedBy;
 
-    public ResourceRequest() {}
+    // ✅ REQUIRED SETTERS / GETTERS
 
-    public Long getId() { return id; }
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
-    public String getResourceType() { return resourceType; }
+    public String getStatus() {
+        return status;
+    }
+
+    public void setRequestedBy(User requestedBy) {
+        this.requestedBy = requestedBy;
+    }
+
+    public User getRequestedBy() {
+        return requestedBy;
+    }
+
     public void setResourceType(String resourceType) {
         this.resourceType = resourceType;
     }
 
-    public User getUser() { return user; }
-    public void setUser(User user) { this.user = user; }
+    public String getResourceType() {
+        return resourceType;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    public void setPurpose(String purpose) {
+        this.purpose = purpose;
+    }
+
+    public String getPurpose() {
+        return purpose;
+    }
+
+    public Long getId() {
+        return id;
+    }
 }
