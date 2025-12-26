@@ -3,46 +3,48 @@ package com.example.demo.service.impl;
 import com.example.demo.entity.Resource;
 import com.example.demo.repository.ResourceRepository;
 import com.example.demo.service.ResourceService;
-import java.util.List;
-import java.util.Optional;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
+
+@Service   // ⭐ THIS CREATES THE BEAN
 public class ResourceServiceImpl implements ResourceService {
 
-    private final ResourceRepository resourceRepository;
+    private final ResourceRepository repository;
 
-    public ResourceServiceImpl(ResourceRepository resourceRepository) {
-        this.resourceRepository = resourceRepository;
+    public ResourceServiceImpl(ResourceRepository repository) {
+        this.repository = repository;
     }
 
     @Override
     public Resource createResource(Resource resource) {
-
-        if (resource.getResourceType() == null || resource.getCapacity() == null) {
-            throw new IllegalArgumentException("Invalid resource");
-        }
-
-        if (resource.getCapacity() < 1) {
-            throw new IllegalArgumentException("Invalid capacity");
-        }
-
-        if (resourceRepository.existsByResourceName(resource.getResourceName())) {
-            throw new IllegalArgumentException("Resource already exists");
-        }
-
-        return resourceRepository.save(resource);
-    }
-
-    @Override
-    public Resource getResource(Long id) {
-        Optional<Resource> r = resourceRepository.findById(id);
-        if (r.isEmpty()) {
-            throw new RuntimeException("Resource not found");
-        }
-        return r.get();
+        return repository.save(resource);
     }
 
     @Override
     public List<Resource> getAllResources() {
-        return resourceRepository.findAll();
+        return repository.findAll();
+    }
+
+    @Override
+    public Resource getResourceById(Long id) {
+        return repository.findById(id).orElse(null);
+    }
+
+    @Override
+    public Resource updateResource(Long id, Resource resource) {
+        Resource existing = repository.findById(id).orElse(null);
+        if (existing != null) {
+            existing.setName(resource.getName());
+            existing.setType(resource.getType());
+            existing.setActive(resource.getActive());
+            return repository.save(existing);
+        }
+        return null;
+    }
+
+    @Override
+    public void deleteResource(Long id) {
+        repository.deleteById(id);
     }
 }
