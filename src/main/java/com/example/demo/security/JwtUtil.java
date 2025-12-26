@@ -27,4 +27,9 @@ public class JwtUtil {
 
         return claims;
     }
+
+    // ✅ REQUIRED BY JwtAuthenticationFilter
+    public boolean validateToken(String token) {
+        return token != null && token.split("\\|").length == 3;
+    }
 }

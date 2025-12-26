@@ -11,17 +11,24 @@ public class ResourceRequest {
     private Long id;
 
     private String purpose;
+    private String status;
+
     private LocalDateTime startTime;
     private LocalDateTime endTime;
 
     @ManyToOne
     private User requestedBy;
 
+    // ===== REQUIRED SETTERS / GETTERS =====
+
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
     public String getPurpose() { return purpose; }
     public void setPurpose(String purpose) { this.purpose = purpose; }
+
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
 
     public LocalDateTime getStartTime() { return startTime; }
     public void setStartTime(LocalDateTime startTime) { this.startTime = startTime; }
@@ -31,4 +38,9 @@ public class ResourceRequest {
 
     public User getRequestedBy() { return requestedBy; }
     public void setRequestedBy(User requestedBy) { this.requestedBy = requestedBy; }
+
+    // ✅ REQUIRED BY ResourceRequestServiceImpl
+    public void setUser(User user) {
+        this.requestedBy = user;
+    }
 }
