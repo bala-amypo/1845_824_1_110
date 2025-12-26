@@ -26,20 +26,58 @@ public class ResourceRequest {
 
     private String status = "PENDING";
 
-    public ResourceRequest() {}
+    public ResourceRequest() {
+    }
 
-    public Long getId() { return id; }
-    public String getStatus() { return status; }
-    public User getRequestedBy() { return requestedBy; }
+    public Long getId() {
+        return id;
+    }
 
-    public void setId(Long id) { this.id = id; }
-    public void setResourceType(String resourceType) { this.resourceType = resourceType; }
-    public void setRequestedBy(User requestedBy) { this.requestedBy = requestedBy; }
-    public void setStartTime(LocalDateTime startTime) { this.startTime = startTime; }
-    public void setEndTime(LocalDateTime endTime) { this.endTime = endTime; }
-    public void setPurpose(String purpose) { this.purpose = purpose; }
-    public void setStatus(String status) { this.status = status; }
+    public String getResourceType() {
+        return resourceType;
+    }
 
-    public LocalDateTime getStartTime() { return startTime; }
-    public LocalDateTime getEndTime() { return endTime; }
+    public User getRequestedBy() {
+        return requestedBy;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setResourceType(String resourceType) {
+        this.resourceType = resourceType;
+    }
+
+    public void setRequestedBy(User requestedBy) {
+        this.requestedBy = requestedBy;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
+    }
+
+    public void setPurpose(String purpose) {
+        this.purpose = purpose;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }
