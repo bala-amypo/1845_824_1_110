@@ -1,4 +1,4 @@
-// package com.example.demo.controller;
+package com.example.demo.controller;
 
 import com.example.demo.entity.Resource;
 import com.example.demo.service.ResourceService;
