@@ -31,7 +31,7 @@ import org.springframework.context.annotation.Configuration;
 import java.util.List;
 
 @Configuration
-public class SwaggerConfig {
+public class OpenApiConfig {
 
     @Bean
     public OpenAPI customOpenAPI() {
@@ -45,15 +45,17 @@ public class SwaggerConfig {
                 .name("Authorization");
 
         return new OpenAPI()
-                // Server URL (VERY IMPORTANT)
+                // Server URL
                 .servers(List.of(
                         new Server().url("https://9049.32procr.amypo.ai")
                 ))
 
-                // Security configuration
+                // Register security scheme
                 .components(new Components()
                         .addSecuritySchemes("bearerAuth", bearerAuth)
                 )
+
+                // Apply security globally
                 .addSecurityItem(
                         new SecurityRequirement().addList("bearerAuth")
                 );
