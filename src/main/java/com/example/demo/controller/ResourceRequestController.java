@@ -1,4 +1,4 @@
-package com.example.demo.controller;
+// package com.example.demo.controller;
 
 import com.example.demo.entity.ResourceRequest;
 import com.example.demo.service.ResourceRequestService;
@@ -7,29 +7,36 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/requests")
+@RequestMapping("/api/requests")
 public class ResourceRequestController {
 
-    private final ResourceRequestService service;
+    private final ResourceRequestService requestService;
 
-    public ResourceRequestController(ResourceRequestService service) {
-        this.service = service;
+    public ResourceRequestController(ResourceRequestService requestService) {
+        this.requestService = requestService;
     }
 
     @PostMapping("/{userId}")
-    public ResourceRequest create(@PathVariable Long userId,
-                                  @RequestBody ResourceRequest request) {
-        return service.createRequest(userId, request);
+    public ResourceRequest createRequest(
+            @PathVariable Long userId,
+            @RequestBody ResourceRequest request) {
+        return requestService.createRequest(userId, request);
+    }
+
+    @GetMapping("/user/{userId}")
+    public List<ResourceRequest> getByUser(@PathVariable Long userId) {
+        return requestService.getRequestsByUser(userId);
     }
 
     @GetMapping("/{id}")
-    public ResourceRequest getRequest(@PathVariable Long id) {
-    return service.getRequest(id);
+    public ResourceRequest getById(@PathVariable Long id) {
+        return requestService.getRequest(id);
     }
 
-    @GetMapping
-    public List<ResourceRequest> getAll() {
-    return service.getAllRequests();
+    @PutMapping("/status/{requestId}")
+    public ResourceRequest updateStatus(
+            @PathVariable Long requestId,
+            @RequestParam String status) {
+        return requestService.updateRequestStatus(requestId, status);
     }
-
 }
