@@ -74,18 +74,34 @@ import org.springframework.context.annotation.Configuration;
 import java.util.List;
 
 @Configuration
-public class SwaggerConfig{
+public class OpenApiConfig {
 
     @Bean
-    public OpenAPI openAPI() {
+    public OpenAPI customOpenAPI() {
+
+        // 🔐 JWT Security Scheme
+        SecurityScheme jwtScheme = new SecurityScheme()
+                .name("Authorization")
+                .type(SecurityScheme.Type.HTTP)
+                .scheme("bearer")
+                .bearerFormat("JWT");
+
         return new OpenAPI()
-                .servers(List.of(new Server().url("https://9049.32procr.amypo.ai")))
-                .components(new Components()
-                        .addSecuritySchemes("bearerAuth",
-                                new SecurityScheme()
-                                        .type(SecurityScheme.Type.HTTP)
-                                        .scheme("bearer")
-                                        .bearerFormat("JWT")))
-                .addSecurityItem(new SecurityRequirement().addList("bearerAuth"));
+                // 🌍 Server URL
+                .servers(List.of(
+                        new Server().url("https://9081.pro604cr.amypo.ai")
+                ))
+
+                // 🔒 Apply security globally
+                .addSecurityItem(
+                        new SecurityRequirement().addList("BearerAuth")
+                )
+
+                // 🔑 Register security scheme
+                .components(
+                        new Components().addSecuritySchemes(
+                                "BearerAuth", jwtScheme
+                        )
+                );
     }
 }
