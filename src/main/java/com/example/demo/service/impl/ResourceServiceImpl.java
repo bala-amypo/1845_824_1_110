@@ -1,45 +1,84 @@
+// package com.example.demo.service.impl;
+
+// import com.example.demo.entity.Resource;
+// import com.example.demo.repository.ResourceRepository;
+// import com.example.demo.service.ResourceService;
+// import org.springframework.stereotype.Service;
+
+// import java.util.List;
+
+// @Service
+// public class ResourceServiceImpl implements ResourceService {
+
+//     private final ResourceRepository repo;
+
+//     public ResourceServiceImpl(ResourceRepository repo) {
+//         this.repo = repo;
+//     }
+
+//     @Override
+//     public Resource createResource(Resource resource) {
+
+//         if (resource.getResourceName() == null ||
+//             resource.getResourceType() == null ||
+//             resource.getCapacity() == null) {
+//             throw new RuntimeException("Invalid resource");
+//         }
+
+//         if (repo.existsByResourceName(resource.getResourceName())) {
+//             throw new RuntimeException("Resource already exists");
+//         }
+
+//         return repo.save(resource);
+//     }
+
+//     @Override
+//     public List<Resource> getAllResources() {
+//         return repo.findAll();
+//     }
+
+//     // ✅ REQUIRED METHOD — SIMPLE IMPLEMENTATION
+//     @Override
+//     public void deleteResource(Long id) {
+//         repo.deleteById(id);
+//     }
+// }
 package com.example.demo.service.impl;
 
 import com.example.demo.entity.Resource;
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.ResourceRepository;
 import com.example.demo.service.ResourceService;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-
 @Service
 public class ResourceServiceImpl implements ResourceService {
 
-    private final ResourceRepository repo;
+    private final ResourceRepository resourceRepository;
 
-    public ResourceServiceImpl(ResourceRepository repo) {
-        this.repo = repo;
+    public ResourceServiceImpl(ResourceRepository resourceRepository) {
+        this.resourceRepository = resourceRepository;
     }
 
     @Override
     public Resource createResource(Resource resource) {
-
-        if (resource.getResourceName() == null ||
-            resource.getResourceType() == null ||
-            resource.getCapacity() == null) {
-            throw new RuntimeException("Invalid resource");
+        if (resource.getResourceType() == null || resource.getCapacity() == null || resource.getCapacity() < 1) {
+            throw new IllegalArgumentException("Invalid resource");
         }
-
-        if (repo.existsByResourceName(resource.getResourceName())) {
-            throw new RuntimeException("Resource already exists");
+        if (resourceRepository.existsByResourceName(resource.getResourceName())) {
+            throw new IllegalArgumentException("Resource already exists");
         }
+        return resourceRepository.save(resource);
+    }
 
-        return repo.save(resource);
+    @Override
+    public Resource getResource(Long id) {
+        return resourceRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Resource not found"));
     }
 
     @Override
     public List<Resource> getAllResources() {
-        return repo.findAll();
-    }
-
-    // ✅ REQUIRED METHOD — SIMPLE IMPLEMENTATION
-    @Override
-    public void deleteResource(Long id) {
-        repo.deleteById(id);
+        return resourceRepository.findAll();
     }
 }
