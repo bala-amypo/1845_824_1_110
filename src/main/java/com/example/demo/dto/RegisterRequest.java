@@ -1,6 +1,4 @@
-// public class RegisterRequest{
-    
-// }
+
 package com.example.demo.dto;
 
 public class RegisterRequest {
