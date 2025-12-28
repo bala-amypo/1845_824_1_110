@@ -1,66 +1,3 @@
-// package com.example.demo.config;
-
-// import io.swagger.v3.oas.models.OpenAPI;
-// import io.swagger.v3.oas.models.servers.Server;
-// import org.springframework.context.annotation.Bean;
-// import org.springframework.context.annotation.Configuration;
-// import java.util.List;
-
-// @Configuration
-// public class OpenApiConfig {
-
-//     @Bean
-//     public OpenAPI customOpenAPI() {
-//         return new OpenAPI()
-//                 .servers(List.of(
-//                         new Server().url("https://9049.32procr.amypo.ai/")
-//                 ));
-//         }
-// }
-// package com.example.demo.config;
-
-// import io.swagger.v3.oas.models.OpenAPI;
-// import io.swagger.v3.oas.models.Components;
-// import io.swagger.v3.oas.models.security.SecurityRequirement;
-// import io.swagger.v3.oas.models.security.SecurityScheme;
-// import io.swagger.v3.oas.models.servers.Server;
-
-// import org.springframework.context.annotation.Bean;
-// import org.springframework.context.annotation.Configuration;
-
-// import java.util.List;
-
-// @Configuration
-// public class OpenApiConfig {
-
-//     @Bean
-//     public OpenAPI customOpenAPI() {
-
-//         // JWT Bearer Security Scheme
-//         SecurityScheme bearerAuth = new SecurityScheme()
-//                 .type(SecurityScheme.Type.HTTP)
-//                 .scheme("bearer")
-//                 .bearerFormat("JWT")
-//                 .in(SecurityScheme.In.HEADER)
-//                 .name("Authorization");
-
-//         return new OpenAPI()
-//                 // Server URL
-//                 .servers(List.of(
-//                         new Server().url("https://9049.32procr.amypo.ai")
-//                 ))
-
-//                 // Register security scheme
-//                 .components(new Components()
-//                         .addSecuritySchemes("bearerAuth", bearerAuth)
-//                 )
-
-//                 // Apply security globally
-//                 .addSecurityItem(
-//                         new SecurityRequirement().addList("bearerAuth")
-//                 );
-//     }
-// }
 package com.example.demo.config;
 
 import io.swagger.v3.oas.models.OpenAPI;
@@ -89,7 +26,7 @@ public class OpenApiConfig {
         return new OpenAPI()
                 // 🌍 Server URL
                 .servers(List.of(
-                        new Server().url("https://9039.42.amypo.ai")
+                        new Server().url("https://9081.pro604cr.amypo.ai")
                 ))
 
                 // 🔒 Apply security globally
