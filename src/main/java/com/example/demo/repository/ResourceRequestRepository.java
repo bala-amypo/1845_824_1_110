@@ -1,4 +1,4 @@
-package com.example.demo.repository;
+// package com.example.demo.repository;
 
 import com.example.demo.entity.ResourceRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -7,6 +7,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ResourceRequestRepository extends JpaRepository<ResourceRequest, Long> {
-    List<ResourceRequest> findByRequestedBy_Id(Long id);
-    List<ResourceRequest> findByStartTimeBetween(LocalDateTime s, LocalDateTime e);
+
+    List<ResourceRequest> findByRequestedBy_Id(Long userId);
+
+    List<ResourceRequest> findByStartTimeBetween(LocalDateTime start, LocalDateTime end);
 }
