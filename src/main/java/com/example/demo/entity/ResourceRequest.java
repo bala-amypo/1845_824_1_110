@@ -1,39 +1,100 @@
+// package com.example.demo.entity;
+
+// import jakarta.persistence.*;
+// import java.time.LocalDateTime;
+
+// @Entity
+// public class ResourceRequest {
+
+//     @Id
+//     @GeneratedValue
+//     private Long id;
+
+//     private String resourceType;
+//     private String purpose;
+//     private String status = "PENDING";
+
+//     private LocalDateTime startTime;
+//     private LocalDateTime endTime;
+
+//     @ManyToOne
+//     private User requestedBy;
+
+//     public ResourceRequest() { }
+
+//     // getters & setters
+//     public Long getId() { return id; }
+//     public void setId(Long id) { this.id = id; }
+
+//     public String getResourceType() { return resourceType; }
+//     public void setResourceType(String resourceType) { this.resourceType = resourceType; }
+
+//     public String getPurpose() { return purpose; }
+//     public void setPurpose(String purpose) { this.purpose = purpose; }
+
+//     public String getStatus() { return status; }
+//     public void setStatus(String status) { this.status = status; }
+
+//     public LocalDateTime getStartTime() { return startTime; }
+//     public void setStartTime(LocalDateTime startTime) { this.startTime = startTime; }
+
+//     public LocalDateTime getEndTime() { return endTime; }
+//     public void setEndTime(LocalDateTime endTime) { this.endTime = endTime; }
+
+//     public User getRequestedBy() { return requestedBy; }
+//     public void setRequestedBy(User requestedBy) { this.requestedBy = requestedBy; }
+// }
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "resource_requests")
 public class ResourceRequest {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String resourceType;
-    private String purpose;
-    private String status = "PENDING";
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User requestedBy;
 
     private LocalDateTime startTime;
     private LocalDateTime endTime;
 
-    @ManyToOne
-    private User requestedBy;
+    private String purpose;
 
-    public ResourceRequest() { }
+    private String status = "PENDING";
 
-    // getters & setters
+    @OneToOne(mappedBy = "request")
+    private ResourceAllocation allocation;
+
+    public ResourceRequest() {}
+
+    public ResourceRequest(String resourceType, User requestedBy,
+                           LocalDateTime startTime, LocalDateTime endTime,
+                           String purpose, String status) {
+        this.resourceType = resourceType;
+        this.requestedBy = requestedBy;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.purpose = purpose;
+        this.status = status != null ? status : "PENDING";
+    }
+
+    // getters and setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
     public String getResourceType() { return resourceType; }
     public void setResourceType(String resourceType) { this.resourceType = resourceType; }
 
-    public String getPurpose() { return purpose; }
-    public void setPurpose(String purpose) { this.purpose = purpose; }
-
-    public String getStatus() { return status; }
-    public void setStatus(String status) { this.status = status; }
+    public User getRequestedBy() { return requestedBy; }
+    public void setRequestedBy(User requestedBy) { this.requestedBy = requestedBy; }
 
     public LocalDateTime getStartTime() { return startTime; }
     public void setStartTime(LocalDateTime startTime) { this.startTime = startTime; }
@@ -41,6 +102,10 @@ public class ResourceRequest {
     public LocalDateTime getEndTime() { return endTime; }
     public void setEndTime(LocalDateTime endTime) { this.endTime = endTime; }
 
-    public User getRequestedBy() { return requestedBy; }
-    public void setRequestedBy(User requestedBy) { this.requestedBy = requestedBy; }
+    public String getPurpose() { return purpose; }
+    public void setPurpose(String purpose) { this.purpose = purpose; }
+
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
 }
+

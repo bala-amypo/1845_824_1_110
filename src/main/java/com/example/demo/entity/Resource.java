@@ -1,21 +1,75 @@
+// package com.example.demo.entity;
+
+// import jakarta.persistence.*;
+
+// @Entity
+// public class Resource {
+
+//     @Id
+//     @GeneratedValue(strategy = GenerationType.IDENTITY)
+//     private Long id;
+
+//     private String resourceName;
+//     private String resourceType;
+//     private Integer capacity;
+//     private Boolean active = true;
+
+//     public Resource() {}
+
+//     public Long getId() { return id; }
+//     public void setId(Long id) { this.id = id; }
+
+//     public String getResourceName() { return resourceName; }
+//     public void setResourceName(String resourceName) { this.resourceName = resourceName; }
+
+//     public String getResourceType() { return resourceType; }
+//     public void setResourceType(String resourceType) { this.resourceType = resourceType; }
+
+//     public Integer getCapacity() { return capacity; }
+//     public void setCapacity(Integer capacity) { this.capacity = capacity; }
+
+//     public Boolean getActive() { return active; }
+//     public void setActive(Boolean active) { this.active = active; }
+// }
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
+@Table(name = "resources")
 public class Resource {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
     private String resourceName;
+
+    @Column(nullable = false)
     private String resourceType;
+
     private Integer capacity;
-    private Boolean active = true;
+
+    private String location;
+
+    private LocalDateTime createdAt = LocalDateTime.now();
+
+    @OneToMany(mappedBy = "resource")
+    private List<ResourceAllocation> allocations;
 
     public Resource() {}
 
+    public Resource(String resourceName, String resourceType, Integer capacity, String location) {
+        this.resourceName = resourceName;
+        this.resourceType = resourceType;
+        this.capacity = capacity;
+        this.location = location;
+    }
+
+    // getters and setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -28,6 +82,6 @@ public class Resource {
     public Integer getCapacity() { return capacity; }
     public void setCapacity(Integer capacity) { this.capacity = capacity; }
 
-    public Boolean getActive() { return active; }
-    public void setActive(Boolean active) { this.active = active; }
+    public String getLocation() { return location; }
+    public void setLocation(String location) { this.location = location; }
 }
